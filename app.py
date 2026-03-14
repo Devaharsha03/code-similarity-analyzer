@@ -7,7 +7,7 @@ st.set_page_config(
     page_title="CodeScan · Similarity Engine",
     page_icon="⬡",
     layout="wide",
-    initial_sidebar_state="expanded",
+    initial_sidebar_state="auto",
 )
 
 # ── Global CSS ─────────────────────────────────────────────────────────────────
@@ -109,6 +109,94 @@ textarea:focus {
     border-color: #a78bfa !important;
     box-shadow: 0 0 0 2px #a78bfa22 !important;
 }
+
+/* ── MOBILE RESPONSIVE ── */
+@media (max-width: 768px) {
+
+    /* Keep sidebar intact — auto mode handles collapse */
+    section[data-testid="stSidebar"] {
+        display: block !important;
+    }
+
+    /* Make the hamburger ☰ button prominent and styled */
+    button[data-testid="collapsedControl"],
+    [data-testid="collapsedControl"] {
+        display: flex !important;
+        visibility: visible !important;
+        opacity: 1 !important;
+        position: fixed !important;
+        top: 0.6rem !important;
+        left: 0.6rem !important;
+        z-index: 99999 !important;
+        background: linear-gradient(135deg, #1a1a30, #12122a) !important;
+        border: 1px solid #3a3a6a !important;
+        border-radius: 8px !important;
+        width: 42px !important;
+        height: 42px !important;
+        align-items: center !important;
+        justify-content: center !important;
+        box-shadow: 0 0 16px #7c3aed66 !important;
+        cursor: pointer !important;
+        transition: all 0.2s ease !important;
+        padding: 0 !important;
+    }
+    button[data-testid="collapsedControl"]:hover,
+    [data-testid="collapsedControl"]:hover {
+        background: linear-gradient(135deg, #2a1a4a, #1a1a3a) !important;
+        border-color: #a78bfa !important;
+        box-shadow: 0 0 24px #a78bfa88 !important;
+    }
+    button[data-testid="collapsedControl"] svg,
+    [data-testid="collapsedControl"] svg {
+        fill: #a78bfa !important;
+        stroke: #a78bfa !important;
+        width: 20px !important;
+        height: 20px !important;
+    }
+
+    /* Stack snippet columns vertically */
+    [data-testid="column"] {
+        width: 100% !important;
+        flex: 1 1 100% !important;
+        min-width: 100% !important;
+    }
+
+    /* Shrink hero for mobile */
+    .hero-title { font-size: 1.45rem !important; }
+    .hero-sub   { font-size: 0.6rem !important; }
+
+    /* Push content down so hamburger doesn't overlap */
+    .block-container {
+        padding-left: 0.8rem !important;
+        padding-right: 0.8rem !important;
+        padding-top: 3.8rem !important;
+    }
+
+    .card-value { font-size: 1.5rem !important; }
+    .stButton > button { font-size: 0.85rem !important; padding: 0.65rem 1rem !important; }
+    textarea { font-size: 0.74rem !important; }
+    .verdict-high, .verdict-mid, .verdict-low {
+        font-size: 0.78rem !important;
+        padding: 0.7rem 0.9rem !important;
+    }
+    .mobile-info-bar { display: flex !important; }
+}
+
+.mobile-info-bar {
+    display: none;
+    background: #0f0f22;
+    border: 1px solid #1e1e3a;
+    border-radius: 10px;
+    padding: 0.7rem 1rem;
+    margin-bottom: 1.2rem;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.66rem;
+    color: #5050a0;
+    gap: 1.2rem;
+    align-items: center;
+    flex-wrap: wrap;
+}
+.mobile-info-bar b { color: #a78bfa; }
 
 /* ── Divider ── */
 hr { border-color: #1e1e3a; margin: 2rem 0; }
@@ -348,6 +436,15 @@ st.markdown("""
 </div>
 """, unsafe_allow_html=True)
 
+# ── Mobile-only info bar ───────────────────────────────────────────────────────
+st.markdown("""
+<div class="mobile-info-bar">
+    <div>⬡ <b>CodeScan</b> v2.0</div>
+    <div>📐 <b>TF-IDF</b> · Cosine</div>
+    <div>🟢 &gt;0.70 &nbsp;🟡 0.40–0.70 &nbsp;🔴 &lt;0.40</div>
+</div>
+""", unsafe_allow_html=True)
+
 # ── Input columns ──────────────────────────────────────────────────────────────
 col1, gap, col2 = st.columns([5, 0.3, 5])
 
@@ -363,7 +460,7 @@ with col1:
 
 with gap:
     st.markdown("""
-    <div style="display:flex; justify-content:center; align-items:center; height:280px; 
+    <div class="mobile-gap" style="display:flex; justify-content:center; align-items:center; height:280px; 
                 font-size:1.4rem; color:#2a2a4a; margin-top:1.6rem;">⇄</div>
     """, unsafe_allow_html=True)
 
